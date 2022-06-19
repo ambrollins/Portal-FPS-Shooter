@@ -7,8 +7,7 @@ namespace UnityStandardAssets.Vehicles.Ball
     {
         private Ball ball; // Reference to the ball controller.
 
-        private Vector3 move;
-        // the world-relative desired move direction, calculated from the camForward and user input.
+        private Vector3 move; // the world-relative desired move direction, calculated from the camForward and user input.
 
         private Transform cam; // A reference to the main camera in the scenes transform
         private Vector3 camForward; // The current forward direction of the camera
