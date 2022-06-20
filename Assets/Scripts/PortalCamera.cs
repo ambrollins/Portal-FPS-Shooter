@@ -155,14 +155,4 @@ public class PortalCamera : MonoBehaviour
             Debug.DrawLine(nearCorners[i], farCorners[i], Color.red, Time.deltaTime, false); //sides of the created projection matrix
         }
     }
-
-    /*
-	void OnDrawGizmos(){
-		Matrix4x4 m = transform.localToWorldMatrix;
-		Matrix4x4 m2 = Matrix4x4.identity;
-		m2[1, 1] *= camera.aspect;
-		Gizmos.matrix = m * m2;
-		Gizmos.DrawFrustum( transform.position, camera.fieldOfView, camera.farClipPlane, camera.nearClipPlane, camera.aspect );
-	}
-	*/
 }
