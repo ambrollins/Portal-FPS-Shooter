@@ -8,24 +8,19 @@ public class BallDetector : MonoBehaviour
     private bool _ballIsConverted;
     private PickUp _pickUp;
     public GameObject ball;
+    private SlowLidRemove _slowLidRemove;
+
     private void Start()
     {
-        GetComponent<GameObject>().CompareTag("Ball");
+        _slowLidRemove = FindObjectOfType<SlowLidRemove>();
     }
-    
-    public bool Approximately(Vector3 ball_bc, Vector3 ball_ac, float allowedDifference)
+
+    private void OnTriggerEnter(Collider other)
     {
-        var dx = ball_bc.x - ball_ac.x;
-        if (Mathf.Abs(dx) > allowedDifference)
-            return false;
- 
-        var dy = ball_bc.y - ball_ac.y;
-        if (Mathf.Abs(dy) > allowedDifference)
-            return false;
- 
-        var dz = ball_bc.z - ball_ac.z;
- 
-        return Mathf.Abs(dz) >= allowedDifference;
+        if (other.CompareTag("Ball"))
+        {
+            Debug.Log("win");
+            _slowLidRemove.isOpenLid = false;
+        }
     }
-    
 }
