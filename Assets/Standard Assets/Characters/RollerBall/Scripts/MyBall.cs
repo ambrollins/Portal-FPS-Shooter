@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
-public class PickUp : MonoBehaviour
+public class MyBall : MonoBehaviour
 {
-    public Transform whereToPlace;
+   public Transform whereToPlace;
 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _dropDown;
+
+    private EnemyAI _enemyAI;
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -18,10 +22,12 @@ public class PickUp : MonoBehaviour
         GetComponent<SphereCollider>().enabled = false;
         this.transform.position = whereToPlace.position;
         this.transform.parent = GameObject.Find("PlaceHere").transform;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
     }
     private void OnMouseUp()
     {
         this.transform.parent = null; 
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<SphereCollider>().enabled = true;
         StartCoroutine(PlayDoingSound());
@@ -30,7 +36,7 @@ public class PickUp : MonoBehaviour
     IEnumerator  PlayDoingSound()
     {
         yield return new WaitForSeconds(.6f);
-        Debug.Log("boing");
+        //Debug.Log("boing");
         DropSound();
     }
 
@@ -39,5 +45,6 @@ public class PickUp : MonoBehaviour
         _audioSource.clip = _dropDown;
         _audioSource.Play();
     }
-   
+
+    
 }

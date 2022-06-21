@@ -6,7 +6,7 @@ using UnityEngine;
 public class BallDetector : MonoBehaviour
 {
     private bool _ballIsConverted;
-    private PickUp _pickUp;
+    private MyBall _myBall;
     public GameObject ball;
     private SlowLidRemove _slowLidRemove;
 
