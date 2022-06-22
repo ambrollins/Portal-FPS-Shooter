@@ -3,41 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallDetector : MonoBehaviour
+public class DoorCloseDetection : MonoBehaviour
 {
-    private bool _ballIsConverted;
-    private MyBall _myBall;
-    public GameObject ball;
     private SlowLidRemove _slowLidRemove;
     [SerializeField] private AudioClip DoorClose;
 
-    [SerializeField] private GameObject gameWonPanel;
-
     private AudioSource m_AudioSource;
+    //public GameObject doorIsOpenedPanel;
+
     private void Start()
     {
-        _slowLidRemove = FindObjectOfType<SlowLidRemove>();
         m_AudioSource = FindObjectOfType<AudioSource>();
+        _slowLidRemove = FindObjectOfType<SlowLidRemove>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ball"))
+        Debug.Log("trigger");
+        if (other.CompareTag("Lid") && _slowLidRemove.isOpenLid == false)
         {
-            Debug.Log("win");
-            GameWon();
-            _slowLidRemove.isOpenLid = false;
             PlayCloseAudio();
+            Debug.Log("closeAudio");
         }
     }
+
     private void PlayCloseAudio()
     {
         m_AudioSource.clip =  DoorClose;
         m_AudioSource.Play();
     }
-
-    void GameWon()
-    {
-        gameWonPanel.SetActive(true);
-    }
+    
+    
 }

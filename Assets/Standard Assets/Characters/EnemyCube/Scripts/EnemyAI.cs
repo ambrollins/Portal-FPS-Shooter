@@ -14,8 +14,7 @@ public class EnemyAI : MonoBehaviour
     public Material newMaterialRef;
     [SerializeField] private AudioClip gameOverSound;
     [SerializeField] private AudioClip snowWalk;
-    
-    
+    [SerializeField] private GameObject gameOverPanel;
     private AudioSource m_AudioSource;
 
     public bool gameOver = false;
@@ -46,11 +45,9 @@ public class EnemyAI : MonoBehaviour
         {
             gameOver = true;
             transform.localScale = new Vector3(2f, 2f, 2f) * 1.2f;
-            //gameObject.GetComponent<Renderer>().material.color = Color.red;
             gameObject.GetComponent<Renderer>().material = newMaterialRef;
-            transform.localPosition = new Vector3(-13f, -8f, -8f);
-            gameObject.GetComponent<NavMeshAgent>().speed = 0f;
-            //Debug.Log("Game-Over");
+            _agent.speed = 0f;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             m_AudioSource.clip = gameOverSound;
             m_AudioSource.Play();
             KillBall();
@@ -61,6 +58,7 @@ public class EnemyAI : MonoBehaviour
     {
         gameOver = true;
         myBall.SetActive(false);
+        StartCoroutine(GameOver());
         //Debug.Log("myball killed");
     }
 
@@ -77,6 +75,12 @@ public class EnemyAI : MonoBehaviour
             m_AudioSource.Stop();
         }
             
+    }
+
+    IEnumerator  GameOver()
+    {
+        yield return new WaitForSeconds(2f);
+        gameOverPanel.SetActive(true);
     }
 
 }

@@ -13,7 +13,7 @@ public class Sender : MonoBehaviour {
     void FixedUpdate()
     {
         if (currentlyOverlappingObject != null) {
-            var currentDot = Vector3.Dot(transform.up, currentlyOverlappingObject.transform.position - transform.position);
+            float currentDot = Vector3.Dot(transform.up, currentlyOverlappingObject.transform.position - transform.position);
 
             if (currentDot < 0) // only transport the player once he's moved across plane
             {
@@ -28,10 +28,12 @@ public class Sender : MonoBehaviour {
     {
         // This will break if two portable objects are passing through the same portal at the same time
         // TODO: Reimplement in Portable script
+        //Portable portable = other.GetComponent<Portable>();
         if (other.GetComponentInParent<Portable>() != null)
         {
             currentlyOverlappingObject = other.GetComponentInParent<Portable>();
-        } else if (other.GetComponent<Portable>() != null)
+        } 
+        else if (other.GetComponent<Portable>() != null)
         {
             currentlyOverlappingObject = other.GetComponent<Portable>();
         }

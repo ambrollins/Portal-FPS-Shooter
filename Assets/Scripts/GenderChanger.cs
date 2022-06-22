@@ -6,6 +6,7 @@ using UnityEngine;
 public class GenderChanger : MonoBehaviour
 {
     private SlowLidRemove _slowLidRemove;
+    [SerializeField] private Material black;
 
     private void Start()
     {
@@ -13,11 +14,11 @@ public class GenderChanger : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider genderPlane)
+    private void OnTriggerEnter(Collider ball)
     {
         //Destroy(genderPlane.gameObject,1f);
-        genderPlane.gameObject.transform.localScale = new Vector3(1, 1, 1);
-        genderPlane.gameObject.GetComponent<Renderer>().material.color = Color.black;
+        ball.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        ball.gameObject.GetComponent<Renderer>().material = black;
         _slowLidRemove.isOpenLid = true;
     }
    
