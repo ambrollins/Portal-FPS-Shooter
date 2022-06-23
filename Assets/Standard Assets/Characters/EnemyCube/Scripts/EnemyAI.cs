@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private AudioClip snowWalk;
     [SerializeField] private GameObject gameOverPanel;
     private AudioSource m_AudioSource;
+    [SerializeField] private Rigidbody _rigidbody;
 
     public bool gameOver = false;
 
@@ -28,9 +29,10 @@ public class EnemyAI : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         m_AudioSource = GetComponent<AudioSource>();
+        _rigidbody = GetComponent<Rigidbody>();
         //_myBall = GetComponent<MyBall>();
         //WalkAudio();
-        
+
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class EnemyAI : MonoBehaviour
             transform.localScale = new Vector3(2f, 2f, 2f) * 1.2f;
             gameObject.GetComponent<Renderer>().material = newMaterialRef;
             _agent.speed = 0f;
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             m_AudioSource.clip = gameOverSound;
             m_AudioSource.Play();
             KillBall();

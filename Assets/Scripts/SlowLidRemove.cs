@@ -36,6 +36,7 @@ public class SlowLidRemove : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, home.position, speed * Time.deltaTime);
         }
     }
+    
 
     private void OnCollisionEnter(Collision lid)
     {
