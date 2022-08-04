@@ -9,8 +9,13 @@ public class Gun : MonoBehaviour
    public float shootRange;
    public Camera fpsCam;
    
-   [SerializeField] private GameObject decalPrefab;
-
+   public float fireRate= 15f;
+   public float nectTimeToFire = 25f;
+   
+   //[SerializeField] private GameObject decalPrefab;
+   [SerializeField] private GameObject impactEffect;
+   [SerializeField] private AudioSource fireSound;
+   [SerializeField] private float impactForce = 25f;
 
    
    [Header("trigger")] 
@@ -35,19 +40,28 @@ public class Gun : MonoBehaviour
       RaycastHit hit;
       if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, shootRange));
       {
-         SpawnDecal(hit);
+         //SpawnDecal(hit);
          Debug.Log(hit.transform.name);
          Target target = hit.transform.GetComponent<Target>();
          if (target != null)
          {
             target.TakeDamage(damage);
          }
+         fireSound.Play();
+         if (hit.rigidbody != null)
+         {
+            hit.rigidbody.AddForce(-hit.normal*impactForce);
+         }
+
+         GameObject gameObjectHitEffect = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+         Destroy(gameObjectHitEffect,1.2f);
+         
       }
    }
-   private void SpawnDecal(RaycastHit hit)
-   {
-      GameObject decal = Instantiate(decalPrefab, hit.point + (hit.normal * .01f), Quaternion.identity);
-      decal.transform.forward = hit.normal;
-      Destroy(decal, 5f);
-   }
+   // private void SpawnDecal(RaycastHit hit)
+   // {
+   //    GameObject decal = Instantiate(decalPrefab, hit.point + (hit.normal * .01f), Quaternion.identity);
+   //    decal.transform.forward = hit.normal;
+   //    Destroy(decal, 5f);
+   // }
 }
