@@ -108,11 +108,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             get
             {
- #if !MOBILE_INPUT
-				return movementSettings.Running;
-#else
-	            return false;
-#endif
+                return movementSettings.Running;
             }
         }
 
